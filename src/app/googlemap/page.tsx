@@ -64,10 +64,10 @@ const page = () => {
     console.log(items);
 
     return (
-        <div className='mx-auto flex justify-center items-center min-h-screen'>
+        <div className='mx-auto flex justify-center items-center'>
             <div style={{
-                width: "50%",
-                height: "86vh"
+                width: "80vw",
+                height: "75vh"
             }}>
                 <GoogleMapReact
                     bootstrapURLKeys={{ key: googleMapsApiKey }}

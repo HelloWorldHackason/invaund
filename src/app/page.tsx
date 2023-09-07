@@ -7,8 +7,8 @@ export default function Home() {
   const router = useRouter()
 
   return (
-    <div className='flex justify-center items-center min-h-screen'>
-      <button type="button" onClick={() => router.replace('/googlemap')} className='block container mx-auto px-4  w-24'>
+    <div className='flex justify-center items-center w-full h-full'>
+      <button type="button" onClick={() => router.replace('/googlemap')} className='block container w-full h-full'>
         Click Me!
       </button>
     </div>
