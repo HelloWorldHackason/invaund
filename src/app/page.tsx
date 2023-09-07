@@ -1,16 +1,16 @@
 'use client'
-import Image from 'next/image'
-import { useRouter } from 'next/navigation'
+import React from 'react'
+import Link from 'next/link'
 
 
 export default function Home() {
-  const router = useRouter()
-
   return (
     <div className='flex justify-center items-center w-full h-full'>
-      <button type="button" onClick={() => router.replace('/googlemap')} className='block container w-full h-full'>
-        Click Me!
-      </button>
+      <Link href={"/customerpage"}>
+        <div className='block container w-full h-full'>
+          Let's Trabel!
+        </div>
+      </Link>
     </div>
   )
 }

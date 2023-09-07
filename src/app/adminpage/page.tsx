@@ -1,6 +1,5 @@
 'use client'
 import React, { useState } from 'react'
-import { useRouter } from 'next/router' // `next/navigation` ではなく `next/router` を使用
 import GoogleMapReact from 'google-map-react';
 
 const center = {

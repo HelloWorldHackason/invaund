@@ -1,5 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 const Header = () => {
     return (
@@ -7,10 +8,13 @@ const Header = () => {
             width: "80vw",
             height: "10vh"
         }}>
-            <Image src="/images/Beautytourism.svg" alt='' className='w-full mx-auto' width={100} height={100} style={{
-                width: "30vw",
-                height: "10vh"
-            }}></Image>
+            <Link href={"/"}>
+                <Image src="/images/Beautytourism.svg" alt='' className='w-full mx-auto' width={100} height={100} style={{
+                    width: "30vw",
+                    height: "10vh"
+                }}></Image>
+            </Link>
+
         </div>
     )
 }
