@@ -11,14 +11,14 @@ const Footer = () => {
                 <Image src='/images/customerIcon.svg' alt='' width={100} height={100} style={{
                     width: "10vw",
                     height: "10vh"
-                }}></Image>
+                }} className='shadow-sm hover:shadow-none hover:translate-y-1 transition-all duration-300'></Image>
             </Link>
 
             <Link href={"/adminpage"} className='mx-auto'>
                 <Image src='/images/adminIcon.svg' alt='' width={100} height={100} style={{
                     width: "10vw",
                     height: "10vh"
-                }}></Image>
+                }} className='shadow-sm hover:shadow-none hover:translate-y-1 transition-all duration-300'></Image>
             </Link>
 
         </div>
