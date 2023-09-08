@@ -9,7 +9,7 @@ const Header = () => {
             height: "10vh"
         }}>
             <Link href={"/"}>
-                <Image src="/images/Beautytourism.svg" alt='' className='w-full mx-auto' width={100} height={100} style={{
+                <Image src="/images/Beautytourism.svg" alt='' className='w-full mx-auto shadow-sm hover:shadow-none hover:translate-y-1 transition-all duration-300' width={100} height={100} style={{
                     width: "30vw",
                     height: "10vh"
                 }}></Image>
