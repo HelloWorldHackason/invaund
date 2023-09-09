@@ -94,7 +94,7 @@ const page = () => {
             // マーカーがクリックされたときの処理
             newMarker.addListener("click", () => {
                 const infowindow = new maps.InfoWindow({
-                    content: Iconid === adminLikeIcon ? adminDiscription : TrushDiscription,
+                    content:discriptions,
                 });
             // const infowindow = new maps.InfoWindow({
             //     //content: "情報ウィンドウのコンテンツ", // マーカーがクリックされたときに表示する情報ウィンドウの内容
