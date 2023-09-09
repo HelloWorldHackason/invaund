@@ -82,7 +82,7 @@ const page = () => {
                 icon: Iconid,
                 markersize: 10,
             });
-            setMarkers(prevMarkers => [...prevMarkers, newMarker]);
+            setMarkers((prevMarkers: any) => [...prevMarkers, newMarker]);
             map.panTo(latLng);
         }
     };
