@@ -3,9 +3,11 @@ import React, { useState, useEffect } from 'react'
 import GoogleMapReact from 'google-map-react';
 import MarkerClusterer from '@google/markerclustererplus';
 import Image from 'next/image'
-
+//画像のURLを定義
 const TrushCunIcon = '/images/trushCunIcon.svg';
 const adminLikeIcon = '/images/adminLikeIcon.svg';
+const adminDiscription = 'これは管理者のお勧めの場所です。';
+const TrushDiscription = 'これはゴミ箱の位置です';
 
 const center = {
     lat: 35.01036882045099,
@@ -34,17 +36,18 @@ const page = () => {
     ]);
     const [markers, setMarkers] = useState<any | null>([]);
     const [clusterer, setClusterer] = useState<any | null>(null);
+    //画像のURLを状態管理
     const [Iconid, setIconid] = useState<any | null>(adminLikeIcon);
-
+    const [discriptions, setDiscriptions] = useState<string| null>(adminDiscription)
     const toggleMarkerIcon = () => {
         if (Iconid === adminLikeIcon) {
             setIconid(TrushCunIcon);
+            setDiscriptions(TrushDiscription);
         } else {
             setIconid(adminLikeIcon);
+            setDiscriptions(adminDiscription);
         }
     };
-
-
     useEffect(() => {
         if (map && maps && markers.length) {
             if (clusterer) clusterer.clearMarkers();
@@ -55,11 +58,14 @@ const page = () => {
 
     const handleApiLoaded = ({ map, maps }: any) => {
         items.forEach((item) => {
-            new maps.Marker({
+            const marker = new maps.Marker({
                 position: item,
                 map,
+                title: "マーカータイトル",//詳細の追加
             });
-        });
+    });
+
+
         new MarkerClusterer({ markers, map });
         setMap(map);
         setMaps(maps);
@@ -82,8 +88,20 @@ const page = () => {
                 icon: Iconid,
                 markersize: 10,
             });
-            setMarkers(prevMarkers => [...prevMarkers, newMarker]);
+            setMarkers((prevMarkers:any) => [...prevMarkers, newMarker]);
             map.panTo(latLng);
+
+            // マーカーがクリックされたときの処理
+            newMarker.addListener("click", () => {
+                const infowindow = new maps.InfoWindow({
+                    content: Iconid === adminLikeIcon ? adminDiscription : TrushDiscription,
+                });
+            // const infowindow = new maps.InfoWindow({
+            //     //content: "情報ウィンドウのコンテンツ", // マーカーがクリックされたときに表示する情報ウィンドウの内容
+               
+            // });
+            infowindow.open(map, newMarker); // マーカーに情報ウィンドウを関連付けて表示
+        });
         }
     };
 
