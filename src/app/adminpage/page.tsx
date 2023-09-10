@@ -3,14 +3,14 @@ import React, { useState, useEffect } from 'react'
 import GoogleMapReact from 'google-map-react';
 import MarkerClusterer from '@google/markerclustererplus';
 import Image from 'next/image'
-import { useRecoilState } from 'recoil';
-import { markersState, iconIdState, descriptionsState, markerClickedState } from '../States/State';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { adminMarkersState, iconIdState, descriptionsState, markerClickedState, customerMarkersState } from '../States/State';
 
 //画像のURLを定義
 const TrushCunIcon = '/images/trushCunIcon.svg';
 const adminLikeIcon = '/images/adminLikeIcon.svg';
-const adminDiscription = 'これは管理者のお勧めの場所です。';
-const TrushDiscription = 'これはゴミ箱の位置です';
+const adminDescription = 'これは管理者のお勧めの場所です。';
+const TrushDescription = 'これはゴミ箱の位置です';
 
 const center = {
     lat: 35.01036882045099,
@@ -25,44 +25,59 @@ const page = () => {
     const [map, setMap] = useState<any | null>(null);
     const [maps, setMaps] = useState<any | null>(null);
     const [clusterer, setClusterer] = useState<any | null>(null);
-    const [markers, setMarkers] = useRecoilState<any | null>(markersState);
+    const [adminMarkers, setAdminMarkers] = useRecoilState<any | null>(adminMarkersState);
     const [Iconid, setIconid] = useRecoilState<any | null>(iconIdState);
-    const [discriptions, setDiscriptions] = useRecoilState<string>(descriptionsState);
+    const [descriptions, setDescriptions] = useRecoilState<string>(descriptionsState);
     const [markerClicked, setMarkerClicked] = useRecoilState<boolean>(markerClickedState);
+    const customerMarkers = useRecoilValue(customerMarkersState);
 
     const toggleMarkerIcon = () => {
         if (Iconid === adminLikeIcon) {
             setIconid(TrushCunIcon);
-            setDiscriptions(TrushDiscription);
+            setDescriptions(TrushDescription);
         } else {
             setIconid(adminLikeIcon);
-            setDiscriptions(adminDiscription);
+            setDescriptions(adminDescription);
         }
     };
     useEffect(() => {
-        if (map && maps && markers.length) {
+        if (map && maps) {
             if (clusterer) clusterer.clearMarkers();
-            const allMarkers = markers.map((markerData: any) => {
+
+            const allMarkers: any[] = [];
+
+            adminMarkers.map((markerData: any) => {
                 const marker = new maps.Marker({
                     position: markerData.position,
                     icon: markerData.icon,
                     markersize: markerData.size,
+                    markerdescription: markerData.descriptions,
                 });
 
                 marker.addListener("click", (e: any) => {
                     setMarkerClicked(true);
                     const infowindow = new maps.InfoWindow({
-                        content: discriptions,
+                        content: markerData.markerdescription,
                     });
                     infowindow.open(map, marker);
                 });
 
-                return marker;
+                allMarkers.push(marker);
             });
+
+            customerMarkers.forEach((customerMarkerData: any) => {
+                const marker = new maps.Marker({
+                    position: customerMarkerData.position,
+                    icon: customerMarkerData.icon,
+                });
+                // marker.setMap(map);
+                allMarkers.push(marker);
+            });
+
             const newClusterer = new MarkerClusterer(map, allMarkers, { imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m' });
             setClusterer(newClusterer);
         }
-    }, [map, maps, markers]);
+    }, [map, maps, adminMarkers, customerMarkers]);
 
     const handleApiLoaded = ({ map, maps }: any) => {
         setMap(map);
@@ -85,24 +100,25 @@ const page = () => {
                 position: latLng,
                 icon: Iconid,
                 markersize: 10,
+                markerdescription: descriptions,
             });
 
             newMarker.addListener("click", (e: any) => {
                 setMarkerClicked(true);
                 const infowindow = new maps.InfoWindow({
-                    content: discriptions,
+                    content: descriptions,
                 });
                 infowindow.open(map, newMarker);
             });
 
             const markerData = {
-                markerObject: newMarker,
                 position: newMarker.position,
                 icon: newMarker.icon,
                 size: newMarker.markersize,
+                markerdescription: descriptions,
             };
 
-            setMarkers((prevMarkers: any) => [...prevMarkers, markerData]);
+            setAdminMarkers((prevMarkers: any) => [...prevMarkers, markerData]);
             map.panTo(latLng);
         }
     };

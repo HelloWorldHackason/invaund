@@ -1,10 +1,10 @@
 import { atom } from "recoil"; 
 
 const adminLikeIcon = '/images/adminLikeIcon.svg';
-const adminDiscription = 'これは管理者のお勧めの場所です。';
+const adminDescription = 'これは管理者のお勧めの場所です。';
 
-export const markersState = atom({
-  key: 'markersState',
+export const adminMarkersState = atom({
+  key: 'adminMarkersState',
   default: [],
 });
 
@@ -15,10 +15,15 @@ export const iconIdState = atom({
 
 export const descriptionsState = atom({
   key: 'descriptionsState',
-  default: adminDiscription,
+  default: adminDescription,
 });
 
 export const markerClickedState = atom({
   key: 'markerClickedState',
   default: false,
 });
+
+export const customerMarkersState = atom({
+    key: 'customerMarkersState',
+    default: [],
+  });
