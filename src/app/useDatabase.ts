@@ -1,10 +1,20 @@
 import React from "react";
 import { useRef } from "react";
 
-export const getPins = async () => {
+export const getAdminPins = async () => {
   const res = await fetch("/api/pin");
   const data = await res.json();
-  return data.pins;
+  return data.pins.filter((function(pin : any) {
+    return pin.permissionType === "admin";
+  }))
+}
+
+export const getCustomerPins = async () => {
+  const res = await fetch("/api/pin");
+  const data = await res.json();
+  return data.pins.filter((function(pin : any) {
+    return pin.permissionType === "user";
+  }))
 }
 
 export const setCustomerPin = async (latitude: number, longitude: number) => {
