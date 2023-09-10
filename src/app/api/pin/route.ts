@@ -27,14 +27,16 @@ export const GET = async() => {
 //set a pin
 export const POST = async(req: Request, res: NextResponse) => {
   try{
-    const {latitude, longitude, description} = await req.json();
+    const {latitude, longitude, description, pictureSrc, permissionType} = await req.json();
 
     await main();
     const pin = await prisma.pin.create({
       data: {
         latitude,
         longitude,
-        description
+        description,
+        pictureSrc,
+        permissionType
       }
     });
 

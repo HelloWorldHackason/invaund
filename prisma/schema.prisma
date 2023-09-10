@@ -15,5 +15,7 @@ model Pin {
   latitude Float
   longitude Float
   description String
+  pictureSrc String
+  permissionType String
   date DateTime @default(now())
 }
