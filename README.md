@@ -2,9 +2,9 @@
 
 チーム:HellowWorld
 
-プロダクト名：Hotel
+プロダクト名：Beautytourism
 
-# Hotel
+# Beautytourism
 
 
 ## 環境構築・最初にやって欲しいこと
